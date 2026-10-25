@@ -1,0 +1,21 @@
+app = "clinica-estoque-api"
+primary_region = "gru"
+
+[build]
+
+[env]
+  JWT_SECRET = "troque-por-uma-chave-grande-e-aleatoria"
+  JWT_EXPIRATION_MINUTES = "60"
+  # RABBITMQ_HOST etc. configurados via: fly secrets set RABBITMQ_HOST=...
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = false   # API: manter ligada (senão perde o consumer RabbitMQ)
+  auto_start_machines = true
+  min_machines_running = 1
+
+[[vm]]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1
